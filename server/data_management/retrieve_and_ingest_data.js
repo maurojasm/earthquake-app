@@ -28,7 +28,7 @@ router.get('/earthquakes', async function (req, res) {
 
             results.map(
                 async (results) => (
-                    earthquakeObject = {
+                    (earthquakeObject = {
                         place: results.properties.place,
                         time: results.properties.time,
                         tz: results.properties.tz,
@@ -52,14 +52,14 @@ router.get('/earthquakes', async function (req, res) {
                         longitude: results.geometry.coordinates[0],
                         latitude: results.geometry.coordinates[1],
                         depth: results.geometry.coordinates[2],
-                    }
-                ),
-                await client.index({
-                    index: 'earthquakes',
-                    id: results.id,
-                    body: earthquakeObject,
-                    pipeline: 'earthquake_data_pipeline',
-                })
+                    }),
+                    await client.index({
+                        index: 'earthquakes',
+                        id: results.id,
+                        body: earthquakeObject,
+                        pipeline: 'earthquake_data_pipeline',
+                    })
+                )
             )
             
             if(EARTHQUAKES.data.length) {
